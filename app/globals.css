@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  background: #f8fafc;
+}
+
+body {
+  margin: 0;
+  background: #f8fafc;
+  color: #17202a;
+  font-family: Arial, "Microsoft YaHei", "PingFang SC", sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.page-shell {
+  min-height: 100vh;
+  padding: 16px;
+}
+
+.app-width {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.control {
+  min-height: 48px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #d7dee8;
+  background: #fff;
+  padding: 10px 12px;
+  font-weight: 700;
+  color: #17202a;
+  outline: none;
+}
+
+.control:focus {
+  border-color: #0369a1;
+  box-shadow: 0 0 0 4px #bae6fd;
+}

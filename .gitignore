@@ -77,6 +77,10 @@ web_modules/
 # Next.js build output
 .next
 out
+.vercel/
+.turbo/
+build/
+dist/
 
 # Nuxt.js build / generate output
 .nuxt
@@ -124,6 +128,12 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+.vscode/
+.idea/
+
+# OS metadata
+.DS_Store
+Thumbs.db
 
 # pnpm
 .pnpm-store
