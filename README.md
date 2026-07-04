@@ -1,123 +1,150 @@
 # Clothes
 
-工服/衣物扫码分拣系统 Demo。
+**English** · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-这是一个移动端优先的 Web App，用于工服仓库、制服分发、衣物打包分拣等场景。每件衣物有唯一二维码编号，例如 `ITEM-000001`。现场人员可以手动输入或模拟扫码，快速查看衣物信息和目标分拣位置，并完成分拣、异常标记、位置调整和日志追踪。
+A mobile-first web app for uniform warehouses, clothing distribution, and garment packing/sorting scenarios.
 
-## 技术栈
+> "Simple yet complete — scan and go."
 
-- Next.js
-- TypeScript
-- App Router
-- Tailwind CSS
-- localStorage 本地数据持久化
-- Vitest 测试
+---
 
-当前版本不接数据库、不接 Supabase、不接后端服务，也不强制调用摄像头扫码。
+## ✨ Highlights
 
-## 安装和启动
+- 📱 **Mobile-first** — optimized for on-site mobile use with large buttons and clear feedback.
+- 🔍 **Scan or manual input** — supports QR-code scanning or manual entry of item codes like `ITEM-000001`.
+- 🏷️ **Target location guidance** — auto-suggests sorting locations by size: M → `A-01`, L → `A-02`, XL → `A-03`.
+- 💾 **Local data persistence** — stores data in `localStorage`; no database, backend, or network service required.
+- 🧪 **Test coverage for critical paths** — uses Vitest to cover data generation, routing rules, exception states, and edge cases.
+
+---
+
+## 📥 Import Format
+
+The current version generates demo data quickly via the **Initialize Sample Data** button.
+
+Sample batch details:
+
+```text
+Batch: BATCH-20260704-BLUE
+Quantity: 30
+Type: Blue uniform tops
+Status: Pending
+Initial location: Pending sort area
+```
+
+---
+
+## 🚀 Download & Usage
+
+### 1. Get the app
+
+```bash
+git clone <repository-url>
+cd Clothes
+```
+
+### 2. Install dependencies
 
 ```bash
 npm install
-npm run dev
 ```
 
-默认启动后打开：
-
-```text
-http://localhost:3000
-```
-
-如果 3000 端口被占用，可以指定其他端口：
-
-```bash
-npm run dev -- -p 3001
-```
-
-然后打开：
-
-```text
-http://localhost:3001
-```
-
-如果 npm 官方源网络不稳定，可以临时使用镜像源安装：
+If the official npm registry is slow, use a mirror:
 
 ```bash
 npm install --registry=https://registry.npmmirror.com
 ```
 
-## 使用流程
-
-1. 打开首页。
-2. 点击 `初始化示例数据`。
-3. 点击 `开始分拣` 进入 `/scan`。
-4. 输入衣物编号，例如：
-
-   ```text
-   ITEM-000001
-   ```
-
-5. 按 Enter 或点击查询。
-6. 页面会显示衣物信息和醒目的目标位置，例如 `A-01`。
-7. 点击 `确认放入目标位置`，衣物状态会变成 `已分拣`。
-8. 再次扫描已经分拣的衣物时，会提示重复操作。
-
-## 示例数据
-
-点击 `初始化示例数据` 后会写入 localStorage：
-
-- 30 件蓝色制服上衣
-- 编号从 `ITEM-000001` 到 `ITEM-000030`
-- 批次为 `BATCH-20260704-BLUE`
-- 初始状态为 `待分拣`
-- 初始位置为 `待分拣区`
-- M 码目标位置：`A-01`
-- L 码目标位置：`A-02`
-- XL 码目标位置：`A-03`
-- 预置位置：`待分拣区`、`A-01`、`A-02`、`A-03`、`B-01`、`异常区`
-
-## 页面
-
-- `/`：首页统计、当前批次、初始化数据、清空数据、页面入口
-- `/scan`：分拣页，输入或模拟扫码后确认分拣、标记异常、修改目标位置
-- `/items`：衣物列表，支持搜索和状态筛选
-- `/items/[itemCode]`：衣物详情，支持编辑姓名、部门、状态、位置、备注
-- `/locations`：位置管理，支持新增和删除位置；正在被衣物使用的位置不能删除
-- `/logs`：扫码和操作记录，按时间倒序显示
-
-## 常用命令
+### 3. Start the dev server
 
 ```bash
 npm run dev
-npm run test
-npm run build
 ```
 
-## 测试覆盖
-
-测试重点不是只测 happy path，而是覆盖容易作弊或漏掉的行为：
-
-- 示例数据必须生成 30 件唯一 item
-- M / L / XL 必须分别路由到 `A-01` / `A-02` / `A-03`
-- localStorage 未初始化时返回安全空数据
-- 已分拣和异常状态会正确影响统计
-- 异常不计入完成率
-- 更新不存在的 item 不会创建幽灵数据
-- 重复扫码和重复确认分拣必须记录日志
-- 正在被衣物引用的位置不能删除
-- 清空数据只清理本应用自己的 storage key
-- 页面和组件不能绕过 `lib/storage.ts` 直接调用 `localStorage.`
-
-## 数据说明
-
-所有 localStorage 读写都集中在：
+Default URL:
 
 ```text
-lib/storage.ts
+http://localhost:3000
 ```
 
-示例数据生成逻辑在：
+If port `3000` is in use, specify another:
 
-```text
-lib/demo-data.ts
+```bash
+npm run dev -- -p 3001
 ```
+
+---
+
+## 📋 Usage Flow
+
+1. Open the homepage.
+2. Click **Initialize Sample Data**.
+3. Click **Start Sorting** to enter `/scan`.
+4. Enter an item code, e.g. `ITEM-000001`.
+5. Press Enter or click Search.
+6. The page shows item info and target location.
+7. Click **Confirm Place into Target Location**.
+8. Re-scanning shows a duplicate-operation warning.
+
+---
+
+## 🗂️ Page Navigation
+
+| Route | Description |
+| :--- | :--- |
+| `/` | Home stats, current batch, init/clear data, entry points |
+| `/scan` | Sorting page: input code, confirm sort, mark exception, change target |
+| `/items` | Item list: search and status filter |
+| `/items/[itemCode]` | Item detail: edit name, department, status, location, notes |
+| `/locations` | Location management: add/remove locations; in-use locations cannot be deleted |
+| `/logs` | Scan and operation logs, newest first |
+
+---
+
+## 🛠️ Technical Details
+
+- **Development mode**: Human-led, AI-assisted
+- **Framework**: Next.js 15 + React 19
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Routing**: App Router
+- **Testing**: Vitest + React Testing Library
+- **Persistence**: `localStorage` (centralized in `lib/storage.ts`)
+- **License**: MIT License
+
+---
+
+## 🧪 Test Coverage
+
+Tests focus not only on the happy path but also on behaviors that are easy to fake or miss:
+
+- Sample data must generate exactly 30 unique items.
+- M / L / XL must route to `A-01` / `A-02` / `A-03` respectively.
+- Uninitialized `localStorage` must return safe empty data.
+- Sorted and exception statuses must correctly affect statistics.
+- Exceptions must not count toward completion rate.
+- Updating a non-existent item must not create ghost data.
+- Duplicate scans and duplicate sort confirmations must be logged.
+- Locations currently referenced by items cannot be deleted.
+- Clear data must only remove this app’s own storage keys.
+- Pages and components must not call `localStorage` directly; use `lib/storage.ts`.
+
+---
+
+## 💻 Common Commands
+
+```bash
+npm run dev      # Start dev server
+npm run test     # Run tests
+npm run build    # Build for production
+npm run lint     # Run ESLint
+```
+
+---
+
+## 📚 Documentation Navigation
+
+- `app/` — Next.js App Router pages
+- `components/` — React components
+- `lib/` — Types, storage, utilities, demo data
+- `tests/` — Vitest tests
